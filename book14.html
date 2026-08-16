@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سایکو-سایبرنتیک — ماکسول مالز</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg:          #050f12;
+            --bg-card:     #0c1c22;
+            --accent:      #1fa8b8;
+            --accent-dim:  rgba(31, 168, 184, 0.10);
+            --accent-light:#5ecfdc;
+            --text:        #dff0f2;
+            --text-muted:  #6e9aa0;
+            --border:      #132830;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.9;
+        }
+
+        /* ─── TOP BAR ─── */
+        .topbar {
+            padding: 18px 32px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .back-btn {
+            text-decoration: none;
+            color: var(--accent-light);
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: opacity 0.2s;
+        }
+        .back-btn:hover { opacity: 0.7; }
+        .back-btn svg { width: 16px; height: 16px; }
+
+        /* ─── HERO ─── */
+        .hero {
+            text-align: center;
+            padding: 70px 24px 60px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 50% -10%, rgba(31,168,184,0.10) 0%, transparent 60%),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 60px,
+                    rgba(31,168,184,0.025) 60px,
+                    rgba(31,168,184,0.025) 61px
+                );
+            pointer-events: none;
+        }
+        .hero-eyebrow {
+            position: relative;
+            z-index: 1;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .hero h1 {
+            position: relative;
+            z-index: 1;
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--text);
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+        .hero h1 span {
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .hero-sub {
+            position: relative;
+            z-index: 1;
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 300;
+        }
+
+        /* ─── CONTAINER ─── */
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 70px 28px 100px;
+        }
+
+        /* ─── LAW SECTION ─── */
+        .law-section {
+            margin-bottom: 90px;
+            padding-bottom: 90px;
+            border-bottom: 1px solid var(--border);
+        }
+        .law-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .law-header {
+            display: flex;
+            align-items: baseline;
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+        .law-number {
+            font-size: 0.75rem;
+            font-weight: 900;
+            color: var(--accent);
+            background: var(--accent-dim);
+            border: 1px solid rgba(31,168,184,0.28);
+            border-radius: 6px;
+            padding: 4px 10px;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .law-title {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .content p {
+            color: #b8d4d8;
+            font-size: 1rem;
+            font-weight: 300;
+            text-align: justify;
+            margin-bottom: 22px;
+        }
+        .content p:last-child { margin-bottom: 0; }
+
+        /* ─── STORY BOX ─── */
+        .story-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-right: 4px solid var(--accent);
+            border-radius: 8px;
+            padding: 24px 26px;
+            margin: 28px 0;
+            position: relative;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.35);
+        }
+        .story-box::before {
+            content: '❝';
+            position: absolute;
+            top: -14px;
+            right: 20px;
+            font-size: 2rem;
+            color: var(--accent);
+            line-height: 1;
+            background: var(--bg);
+            padding: 0 6px;
+        }
+        .story-box p, .story-box {
+            color: var(--text-muted);
+            font-size: 0.97rem;
+            line-height: 1.9;
+        }
+
+        /* ─── FAILURE LIST ─── */
+        .failure-list {
+            margin: 22px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .failure-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 18px;
+        }
+        .failure-letter {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            background: var(--accent-dim);
+            color: var(--accent-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin-top: 1px;
+        }
+        .failure-text {
+            color: #b8d4d8;
+            font-size: 0.96rem;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+        .failure-text strong {
+            color: var(--accent-light);
+            font-weight: 600;
+        }
+
+        /* ─── EXERCISE CARD ─── */
+        .exercise-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px 26px;
+            margin: 22px 0;
+        }
+        .exercise-meta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+        .exercise-tag {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            padding: 3px 10px;
+        }
+        .exercise-tag.usage {
+            color: var(--accent);
+            background: var(--accent-dim);
+            border: 1px solid rgba(31,168,184,0.22);
+        }
+        .exercise-card p {
+            color: var(--text-muted);
+            font-size: 0.96rem;
+            line-height: 1.9;
+            margin-bottom: 12px;
+        }
+        .exercise-card p:last-child { margin-bottom: 0; }
+        .exercise-card p strong {
+            color: var(--accent-light);
+            font-weight: 600;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            text-align: center;
+            padding: 50px 24px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+        footer .quote {
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <a href="index.html" class="back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        بازگشت به کتابخانه
+    </a>
+</div>
+
+<div class="hero">
+    <p class="hero-eyebrow">تحلیل کامل کتاب</p>
+    <h1>سایکو<span>سایبرنتیک</span></h1>
+    <p class="hero-sub">اثر دکتر ماکسول مالز — مهندسی ذهن و بازسازی تصویر درونی</p>
+</div>
+
+<div class="container">
+
+    <!-- مقدمه -->
+    <section class="law-section">
+        <div class="law-header">
+            <span class="law-number">مقدمه</span>
+            <h2 class="law-title">کشف بزرگ در اتاق عمل روان</h2>
+        </div>
+        <div class="content">
+            <p>دکتر ماکسول مالز یک جراح پلاستیک برجسته بود، اما کشف او نه در اتاق عمل، بلکه در روان انسان رخ داد. او در طول سال‌ها طبابت با پدیده‌ای عجیب مواجه شد: بسیاری از بیماران حتی پس از جراحی‌های موفقیت‌آمیز و رفع نقص‌های ظاهری، همچنان احساس زشتی، بی‌کفایتی و کمبود اعتمادبه‌نفس داشتند.</p>
+            <div class="story-box">
+                این تضاد باعث شد دکتر مالز به مطالعه‌ی روان‌شناسی و عملکرد مغز روی بیاورد. او دریافت که انسان‌ها دو چهره دارند: چهره‌ی فیزیکی و «چهره‌ی درونی» یا همان تصویر ذهنی. تا زمانی که چهره‌ی درونی تغییر نکند، هیچ موفقیت بیرونی — چه جراحی زیبایی، چه ثروت، چه موقعیت شغلی — نمی‌تواند تغییری در احساس خوشبختی و عملکرد فرد ایجاد کند.
+            </div>
+            <p>واژه‌ی «سایبرنتیک» در یونانی به معنای «سکاندار» است و در علم مهندسی به سیستم‌های هدایت‌شونده (مثل موشک‌های ردیاب حرارتی) اطلاق می‌شود. دکتر مالز ثابت کرد که مغز و سیستم عصبی انسان دقیقاً مانند یک ماشین سایبرنتیک و هدف‌جو عمل می‌کند. این کتاب، دفترچه راهنمای برنامه‌ریزی مجدد این سوپرکامپیوتر زیستی است.</p>
+        </div>
+    </section>
+
+    <!-- مفهوم ۱: تصویر ذهنی -->
+    <section class="law-section">
+        <div class="law-header">
+            <span class="law-number">مفهوم ۰۱</span>
+            <h2 class="law-title">تصویر ذهنی — هسته‌ی مرکزی شخصیت</h2>
+        </div>
+        <div class="content">
+            <p>تصویر ذهنی، برنامه‌ریزی پایه‌ای ناخودآگاه شماست. شما هرگز، تحت هیچ شرایطی، نمی‌توانید فراتر از تصویری که از خودتان در ذهن دارید عمل کنید.</p>
+            <div class="story-box">
+                اگر در ذهن خود، خودتان را فردی «بدشانس»، «بی‌استعداد در ریاضی» یا «ناموفق در ارتباطات» تعریف کرده باشید، ناخودآگاه شما این تعاریف را به عنوان قانون قطعی می‌پذیرد. حتی اگر با اراده‌ی قوی بخواهید موفق شوید، تصویر ذهنی وارد عمل شده و با ایجاد خرابکاری‌های ناخودآگاه، شما را به همان سطح پایینی که باور دارید برمی‌گرداند.
+            </div>
+        </div>
+    </section>
+
+    <!-- مفهوم ۲: توهم اراده -->
+    <section class="law-section">
+        <div class="law-header">
+            <span class="law-number">مفهوم ۰۲</span>
+            <h2 class="law-title">شکستن توهم اراده</h2>
+        </div>
+        <div class="content">
+            <p>بسیاری از دوره‌های موفقیت روی «تلاش بیشتر» و «اراده‌ی آهنین» تاکید دارند. اما سایکو-سایبرنتیک می‌گوید: اراده در برابر تصویر ذهنی همیشه شکست می‌خورد.</p>
+            <div class="story-box">
+                اگر تصویر ذهنی شما یک فرد سیگاری باشد، اراده برای ترک سیگار تنها یک شکنجه‌ی موقت است. تغییر واقعی زمانی رخ می‌دهد که شما بدون زور زدن، تصویر ذهنی خود را از «یک فرد سیگاری که در حال ترک است» به «یک فرد غیرسیگاری» تغییر دهید.
+            </div>
+        </div>
+    </section>
+
+    <!-- مفهوم ۳: مکانیزم موفقیت -->
+    <section class="law-section">
+        <div class="law-header">
+            <span class="law-number">مفهوم ۰۳</span>
+            <h2 class="law-title">مکانیزم موفقیت خودکار</h2>
+        </div>
+        <div class="content">
+            <p>مغز انسان یک مکانیسم هدف‌جوی خودکار است. سیستم عصبی شما تفاوت بین یک «تجربه‌ی فیزیکی واقعی» و یک «تجربه‌ی کاملاً شفاف در تخیل» را متوجه نمی‌شود.</p>
+            <div class="story-box">
+                وقتی شما با تمام حواس خود رسیدن به یک هدف را تجسم می‌کنید، مغز شبکه‌های عصبی جدیدی می‌سازد و این مکانیزم خودکار را برای رسیدن به آن هدف روشن می‌کند.
+            </div>
+        </div>
+    </section>
+
+    <!-- مفهوم ۴: خروج از هیپنوتیزم -->
+    <section class="law-section">
+        <div class="law-header">
+            <span class="law-number">مفهوم ۰۴</span>
+            <h2 class="law-title">خروج از هیپنوتیزم باورهای غلط</h2>
+        </div>
+        <div class="content">
+            <p>شما همین حالا هم یک فرد موفق هستید، اما توسط باورهای غلطی که در کودکی از والدین، معلمان، جامعه و تجربیات تلخ گذشته دریافت کرده‌اید، «هیپنوتیزم» شده‌اید. شما نقص‌ها و شکست‌های موقت خود را به عنوان هویت اصلی‌تان پذیرفته‌اید.</p>
+            <div class="story-box">
+                هدف این کتاب اضافه کردن چیزی به شما نیست، بلکه بیدار کردن شما از این هیپنوتیزم و دور ریختن باورهای دروغین است.
+            </div>
+        </div>
+    </section>
+
+    <!-- درس ۱ -->
+    <section class="law-section">
+        <div class="law-header">
+            <span class="law-number">درس ۰۱</span>
+            <h2 class="law-title">منطق سایبرنتیک؛ اشتباهات فقط داده‌های مسیر هستند</h2>
+        </div>
+        <div class="content">
+            <p>یک موشک ردیاب چگونه به هدف می‌رسد؟ آیا از همان ابتدا یک خط راست را طی می‌کند؟ خیر! موشک دائماً زیگزاگ می‌رود، اشتباه می‌کند، از مسیر خارج می‌شود، سنسورهایش بازخورد منفی می‌دهند، مسیر را اصلاح می‌کند و در نهایت به هدف می‌خورد.</p>
+            <div class="story-box">
+                شما نباید از اشتباه کردن بترسید. انسان‌های موفق اشتباهات را به عنوان «هویت» خود نمی‌بینند، بلکه آن‌ها را صرفاً به چشم «داده‌هایی برای اصلاح مسیر» نگاه می‌کنند. اشتباه را پیدا کنید، مسیر را اصلاح کنید و سپس اشتباه را کاملاً از حافظه عاطفی خود پاک کنید.
+            </div>
+        </div>
+    </section>
+
+    <!-- درس ۲ -->
+    <section class="law-section">
+        <div class="law-header">
+            <span class="law-number">درس ۰۲</span>
+            <h2 class="law-title">جراحی پلاستیک عاطفی — قدرت بخشش</h2>
+        </div>
+        <div class="content">
+            <p>بسیاری از ما زخم‌های عاطفی گذشته را با خود حمل می‌کنیم. کینه‌ها و رنجش‌ها باعث ایجاد اسکار (جوشگاه) روی روان ما می‌شوند.</p>
+            <div class="story-box">
+                دکتر مالز می‌گوید «بخشش» یک لطف اخلاقی به دیگران نیست، بلکه یک تیغ جراحی روانی برای نجات تصویر ذهنی خودتان است. تا زمانی که دیگران و خودتان را برای اشتباهات گذشته نبخشید، سیستم هدایت‌گر شما روی سیگنال‌های منفی قفل می‌ماند و نمی‌تواند به سمت آینده‌ی مثبت حرکت کند.
+            </div>
+        </div>
+    </section>
+
+    <!-- درس ۳ -->
+    <section class="law-section">
+        <div class="law-header">
+            <span class="law-number">درس ۰۳</span>
+            <h2 class="law-title">شخصیت واقعی خود را آزاد کنید</h2>
+        </div>
+        <div class="content">
+            <p>بسیاری از ما به دلیل ترس از قضاوت دیگران، احساسات و رفتارهای واقعی خود را سرکوب می‌کنیم و یک «ماسک» به چهره می‌زنیم. این سرکوب باعث می‌شود مکانیزم موفقیت ما خاموش شود.</p>
+            <div class="story-box">
+                سایکو-سایبرنتیک به ما می‌آموزد که خودجوش باشیم و دست از فیلتر کردن مداوم خودمان برداریم. فردی که تصویر ذهنی سالمی دارد، نیازی به اثبات خود به دیگران نمی‌بیند و در کمال آرامش، خودش است.
+            </div>
+        </div>
+    </section>
+
+    <!-- درس ۴ -->
+    <section class="law-section">
+        <div class="law-header">
+            <span class="law-number">درس ۰۴</span>
+            <h2 class="law-title">تبدیل بحران به فرصت</h2>
+        </div>
+        <div class="content">
+            <p>افرادی که تصویر ذهنی ضعیفی دارند، در مواقع بحرانی و شرایط پرفشار فرو می‌پاشند. اما ذهن سایبرنتیک می‌داند که بحران، صرفاً یک «محرک فشرده» است.</p>
+            <div class="story-box">
+                اگر سیستم شما روی هدف متمرکز باشد، آدرنالین و استرس ناشی از بحران، به جای فلج کردن شما، تبدیل به سوخت جت برای تمرکز بیشتر و پیدا کردن راه‌حل‌های خلاقانه می‌شود.
+            </div>
+        </div>
+    </section>
+
+    <!-- درس ۵: FAILURE -->
+    <section class="law-section">
+        <div class="law-header">
+            <span class="law-number">درس ۰۵</span>
+            <h2 class="law-title">چهره مکانیزم شکست را بشناسید</h2>
+        </div>
+        <div class="content">
+            <p>هر زمان که سیستم ذهنی شما از کار بیفتد، علائم هشداردهنده‌ای ظاهر می‌شود. دکتر مالز مکانیزم شکست را با حروف کلمه FAILURE معرفی می‌کند. مراقب این احساسات باشید:</p>
+            <div class="failure-list">
+                <div class="failure-item">
+                    <span class="failure-letter">F</span>
+                    <span class="failure-text"><strong>Frustration</strong> — ناامیدی و استیصال</span>
+                </div>
+                <div class="failure-item">
+                    <span class="failure-letter">A</span>
+                    <span class="failure-text"><strong>Aggressiveness</strong> — پرخاشگری بی‌هدف و کینه از دیگران</span>
+                </div>
+                <div class="failure-item">
+                    <span class="failure-letter">I</span>
+                    <span class="failure-text"><strong>Insecurity</strong> — احساس ناامنی و بی‌ارزشی</span>
+                </div>
+                <div class="failure-item">
+                    <span class="failure-letter">L</span>
+                    <span class="failure-text"><strong>Loneliness</strong> — انزوا و بریدن از جامعه</span>
+                </div>
+                <div class="failure-item">
+                    <span class="failure-letter">U</span>
+                    <span class="failure-text"><strong>Uncertainty</strong> — عدم قطعیت، تردید و ناتوانی در تصمیم‌گیری</span>
+                </div>
+                <div class="failure-item">
+                    <span class="failure-letter">R</span>
+                    <span class="failure-text"><strong>Resentment</strong> — رنجش، حسادت و مقصر دانستن دنیا</span>
+                </div>
+                <div class="failure-item">
+                    <span class="failure-letter">E</span>
+                    <span class="failure-text"><strong>Emptiness</strong> — احساس پوچی و بی‌معنایی</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- تمرین‌ها -->
+    <section class="law-section">
+        <div class="law-header">
+            <span class="law-number">تمرین‌ها</span>
+            <h2 class="law-title">برنامه‌ریزی مجدد ذهن — ۵ تمرین عملی</h2>
+        </div>
+        <div class="content">
+            <p>برای تغییر مدار ذهن و تثبیت یک تصویر ذهنی جدید، به حداقل ۲۱ روز تمرین مداوم نیاز است — دکتر مالز اولین کسی بود که قانون ۲۱ روز برای تغییر عادت‌ها را مطرح کرد.</p>
+
+            <div class="exercise-card">
+                <div class="exercise-meta">
+                    <span class="exercise-tag usage">تمرین ۱</span>
+                    <span class="exercise-tag usage">تئاتر ذهن</span>
+                </div>
+                <p><strong>زمان:</strong> روزانه ۱۵ تا ۳۰ دقیقه.</p>
+                <p>در یک مکان خلوت بنشینید یا دراز بکشید. چشمان خود را ببندید. یک پرده‌ی سینمای بزرگ را در ذهن خود تصور کنید. خودتان را به عنوان بازیگر نقش اول در حال انجام موفقیت‌آمیزِ کاری که از آن می‌ترسید یا هدفی که دارید، تماشا کنید.</p>
+                <p><strong>نکته کلیدی:</strong> جزئیات باید بسیار دقیق باشد. صداها را بشنوید، رنگ‌ها را ببینید و مهم‌تر از همه، احساس پیروزی را در بدنتان بیدار کنید. مغز شما شروع به ساختن ارتباطات عصبی جدید می‌کند، گویی که آن اتفاق واقعاً رخ داده است.</p>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-meta">
+                    <span class="exercise-tag usage">تمرین ۲</span>
+                    <span class="exercise-tag usage">اتاق آرامش</span>
+                </div>
+                <p><strong>کاربرد:</strong> برای زمان‌های استرس و فشار کاری.</p>
+                <p>در ذهن خود یک اتاق امن و کاملاً ایزوله بسازید — یک کتابخانه دنج، یک کلبه چوبی یا یک اتاق مدرن. هرگاه فشارهای بیرونی در حال غلبه بر شما بود، برای ۵ دقیقه چشمانتان را ببندید و در تخیل به این اتاق بروید. روی درب آن تابلویی تصور کنید که نوشته: «ورود هیچ مشکلی به اینجا مجاز نیست.» در این اتاق نفس عمیق بکشید و سیستم عصبی خود را ریست کنید.</p>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-meta">
+                    <span class="exercise-tag usage">تمرین ۳</span>
+                    <span class="exercise-tag usage">یادآوری موفقیت‌ها</span>
+                </div>
+                <p><strong>کاربرد:</strong> برای غلبه بر احساس بی‌کفایتی.</p>
+                <p>ذهن ما تمایل دارد روی شکست‌های گذشته زوم کند. شما باید آگاهانه این روند را معکوس کنید. یک دفترچه بردارید و تمام موفقیت‌های گذشته‌تان (حتی کوچک‌ترین آن‌ها) را بنویسید. هر روز یکی از آن‌ها را به یاد بیاورید و احساس افتخار و قدرتی که در آن لحظه داشتید را دوباره در بدنتان بیدار کنید. این کار به مکانیزم موفقیت شما یادآوری می‌کند که ذاتاً توانمند هستید.</p>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-meta">
+                    <span class="exercise-tag usage">تمرین ۴</span>
+                    <span class="exercise-tag usage">رهاسازی جسمی</span>
+                </div>
+                <p><strong>کاربرد:</strong> آماده‌سازی ذهن برای برنامه‌ریزی مجدد.</p>
+                <p>تصویر ذهنی با زور و فشار تغییر نمی‌کند. روی یک مبل راحت بنشینید. تصور کنید بدنتان از جنس بتن سنگین است و به داخل مبل فرو می‌رود. سپس تصور کنید که پاهایتان از جنس نخ هستند. این حس رهایی را از انگشتان پا تا عضلات فک و پیشانی بالا بیاورید. وقتی جسم شما ریلکس می‌شود، مقاومت ناخودآگاه شکسته شده و ذهن آماده‌ی دریافت باورهای جدید می‌شود.</p>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-meta">
+                    <span class="exercise-tag usage">تمرین ۵</span>
+                    <span class="exercise-tag usage">سایه‌زنی</span>
+                </div>
+                <p><strong>کاربرد:</strong> تمرین رفتار جدید بدون ریسک.</p>
+                <p>مانند بوکسورها که قبل از مسابقه با حریف فرضی مبارزه می‌کنند، شما هم موقعیت‌های سخت را تمرین کنید. اگر قرار است یک سخنرانی داشته باشید یا در یک مصاحبه شرکت کنید، به تنهایی در اتاق راه بروید و با صدای بلند، با اعتمادبه‌نفس کامل و بدون هیچ فشاری دیالوگ‌هایتان را بگویید. حرکات دست و زبان بدنتان را طوری تنظیم کنید که انگار یک فرد کاملاً موفق هستید.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- جمع‌بندی -->
+    <section class="law-section">
+        <div class="law-header">
+            <span class="law-number">جمع‌بندی</span>
+            <h2 class="law-title">پیام بنیادین کتاب</h2>
+        </div>
+        <div class="content">
+            <p>اگر سال‌ها با احساس شکست، استرس یا کمبود اعتمادبه‌نفس زندگی کرده‌اید، به این معنا نیست که ذاتاً انسان ضعیفی هستید؛ بلکه صرفاً کدهای اشتباهی به سوپرکامپیوتر ذهن شما داده شده است.</p>
+            <div class="story-box">
+                با درک عملکرد ماشین شگفت‌انگیز مغز و استفاده از تخیل خلاق به جای زور زدن و اراده‌ی خشک، می‌توانید تصویر ذهنی خود را بازسازی کنید. وقتی تصویر درونی تغییر کند، تغییرات شگفت‌انگیز در دنیای بیرون، نه با سختی، بلکه به صورت خودکار و طبیعی رخ خواهند داد.
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    این خلاصه با هدف ارتقای آگاهی و درک عمیق‌تر مفاهیم کتاب تهیه شده است.
+    <div class="quote">«شما باورهایتان نیستید؛ شما خالق باورهایتان هستید.»</div>
+</footer>
+
+</body>
+</html>
