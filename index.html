@@ -2,6 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>کتابخانه من</title>
     <style>
         @font-face {
@@ -13,112 +14,150 @@
 
         @import url('https://fonts.googleapis.com/css2?family=IranNastaliq&display=swap');
 
-        /* استایل‌های پایه تم تاریک و مقتدر */
+        /* تم گردویی و چوب سوخته */
         body {
             font-family: 'Casablanca', 'Tahoma', sans-serif;
-            background-color: #0d0d0d;
-            color: #e0e0e0;
+            background-color: #1a100a;
+            background-image: radial-gradient(circle at 50% -10%, #4a2f1d 0%, #29180d 40%, #0a0604 100%);
+            color: #e8dcc8;
             line-height: 1.8;
             margin: 0;
             padding: 40px 20px;
             overflow-x: hidden;
-            background-image: radial-gradient(circle at 50% 20%, #1a1a1a 0%, #0d0d0d 80%);
+            min-height: 100vh;
         }
 
         #main-wrapper {
-            max-width: 1200px;
+            max-width: 1000px; /* برای چیدمان ۲ تایی کمی جمع‌تر شد تا کتاب‌ها خیلی کش نیان */
             margin: 0 auto;
-            transition: filter 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: filter 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         /* سربرگ */
         h1 {
             font-family: 'IranNastaliq', serif !important;
-            color: #d4af37;
-            font-size: 4.8rem;
+            color: #e5b85c;
+            font-size: 5rem;
             text-align: center;
             margin-top: 0;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             font-weight: normal;
-            text-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+            text-shadow: 0 5px 20px rgba(229, 184, 92, 0.3);
         }
 
         p.intro {
             font-family: 'Casablanca', sans-serif;
             text-align: center;
             max-width: 750px;
-            margin: 0 auto 60px;
-            color: #aaaaaa;
-            font-size: 1.2rem;
-            border-bottom: 1px dashed #333333;
+            margin: 0 auto 50px;
+            color: #bfa58a;
+            font-size: 1.3rem;
+            border-bottom: 1px dashed rgba(229, 184, 92, 0.3);
             padding-bottom: 30px;
         }
 
-        .section h2 {
-            font-family: 'IranNastaliq', serif !important;
-            color: #e0e0e0;
-            font-size: 3rem;
-            border-right: 4px solid #d4af37;
-            padding-right: 20px;
-            margin-bottom: 40px;
-            font-weight: normal;
+        /* دکمه‌های فیلتر دسته‌بندی */
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 50px;
         }
 
-        /* شبکه کتاب‌ها */
+        .filter-btn {
+            background: rgba(30, 20, 15, 0.6);
+            border: 1px solid #5a3c26;
+            color: #d1bfae;
+            padding: 10px 25px;
+            font-family: 'Casablanca', sans-serif;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .filter-btn:hover {
+            background: #4a2f1d;
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        .filter-btn.active {
+            background: #e5b85c;
+            color: #1a100a;
+            border-color: #e5b85c;
+            font-weight: bold;
+            box-shadow: 0 5px 20px rgba(229, 184, 92, 0.4);
+        }
+
+        /* شبکه کتاب‌ها - ۲ ستونه */
         .books {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 35px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 50px;
             justify-content: center;
-            padding: 10px;
+            padding: 20px;
         }
 
         .book-link {
             text-decoration: none;
             color: inherit;
             display: block;
+            transition: all 0.5s ease; /* برای انیمیشن فیلتر */
+            transform-origin: center;
         }
 
-        /* کارت کتاب */
+        /* کارت کتاب و افکت 3D زنده */
         .book-card {
-            background: #141414;
-            border: 1px solid #222222;
-            border-radius: 6px;
-            padding: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            background: rgba(20, 12, 8, 0.7);
+            border: 1px solid #3d2415;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.6s ease;
+            transform-style: preserve-3d; /* فعال‌سازی فضای ۳ بعدی */
             cursor: pointer;
             position: relative;
         }
 
+        .book-card::before {
+            /* افکت نور ملایم روی کارت */
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
         .book-card:hover {
-            transform: translateY(-10px);
-            border-color: #d4af37;
-            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.25), 0 5px 15px rgba(0, 0, 0, 0.6);
+            /* چرخش و بیرون آمدن کتاب */
+            transform: scale(1.05) translateY(-15px) perspective(1000px) rotateX(4deg) rotateY(-4deg);
+            border-color: #e5b85c;
+            box-shadow: 25px 35px 50px rgba(0, 0, 0, 0.8), -5px -5px 20px rgba(229, 184, 92, 0.15);
             z-index: 10;
+            background: rgba(30, 18, 12, 0.9);
         }
 
         .book-card img {
             width: 100%;
-            height: 270px;
+            aspect-ratio: 2 / 3; /* نسبت طلایی کتاب */
             object-fit: cover;
             border-radius: 4px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-            transition: transform 0.4s ease;
-        }
-
-        .book-card:hover img {
-            transform: scale(1.03);
+            box-shadow: 10px 10px 25px rgba(0,0,0,0.6);
+            transition: transform 0.6s ease;
         }
 
         .book-title {
             font-family: 'Casablanca', sans-serif;
-            margin-top: 15px;
+            margin-top: 20px;
             font-weight: bold;
-            font-size: 15px;
+            font-size: 1.2rem;
             color: #ffffff;
-            height: 45px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -127,33 +166,33 @@
         }
 
         .book-card:hover .book-title {
-            color: #d4af37;
+            color: #e5b85c;
         }
 
         .book-author {
             font-family: 'Casablanca', sans-serif;
-            font-size: 13px;
-            color: #888888;
+            font-size: 1rem;
+            color: #a68c76;
             margin-top: 5px;
         }
 
-        /* لوح خلاصه جدید - پاپ‌آپ مرکزی و باشکوه */
+        /* لوح خلاصه جدید - طراحی زوم‌شده و بزرگ */
         #summary-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(5, 5, 5, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(5, 3, 2, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 2000;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.5s ease;
         }
 
         #summary-overlay.active {
@@ -162,79 +201,120 @@
         }
 
         #summary-box {
-            background: #141414;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-top: 4px solid #d4af37;
-            padding: 35px;
-            border-radius: 8px;
-            max-width: 550px;
-            width: 85%;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
-            text-align: center;
-            transform: scale(0.85);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            background: linear-gradient(145deg, #1f140e, #110905);
+            border: 1px solid rgba(229, 184, 92, 0.2);
+            border-right: 5px solid #e5b85c;
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 850px;
+            width: 90%;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9);
+            transform: scale(0.7) translateY(50px);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            gap: 40px;
         }
 
         #summary-overlay.active #summary-box {
-            transform: scale(1);
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        /* عکس بزرگ شده داخل پاپ‌آپ */
+        #popup-img {
+            width: 250px;
+            border-radius: 6px;
+            box-shadow: 15px 15px 40px rgba(0,0,0,0.8);
+            transform: perspective(800px) rotateY(-10deg);
+        }
+
+        #popup-content {
+            flex: 1;
+            text-align: right;
         }
 
         #summary-text {
             font-family: 'Casablanca', sans-serif;
-            font-size: 1.25rem;
-            color: #e5e5e5;
-            line-height: 2;
+            font-size: 1.4rem;
+            color: #f2e8d9;
+            line-height: 2.2;
             text-align: justify;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
-        /* دکمه‌های داخل پاپ‌آپ */
         .popup-buttons {
             display: flex;
             gap: 15px;
-            justify-content: center;
         }
 
         .btn-action {
             font-family: 'Casablanca', sans-serif;
-            font-size: 1.05rem;
-            padding: 10px 25px;
-            border-radius: 4px;
+            font-size: 1.1rem;
+            padding: 12px 30px;
+            border-radius: 6px;
             cursor: pointer;
             text-decoration: none;
             transition: all 0.3s ease;
         }
 
         .btn-go {
-            background: #d4af37;
-            color: #0d0d0d;
-            border: 1px solid #d4af37;
+            background: #e5b85c;
+            color: #1a100a;
+            border: 1px solid #e5b85c;
             font-weight: bold;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+            box-shadow: 0 4px 15px rgba(229, 184, 92, 0.2);
         }
 
         .btn-go:hover {
-            background: #f1c40f;
-            border-color: #f1c40f;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+            background: #ffcc66;
+            border-color: #ffcc66;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(229, 184, 92, 0.4);
         }
 
         .btn-close {
-            background: transparent;
-            color: #aaaaaa;
-            border: 1px solid #333333;
+            background: rgba(255,255,255,0.05);
+            color: #bfa58a;
+            border: 1px solid #5a3c26;
         }
 
         .btn-close:hover {
-            background: #222222;
+            background: #2a1a11;
             color: #ffffff;
-            border-color: #555555;
+            border-color: #8c5d3b;
         }
 
-        /* افکت محوشدگی عمیق پس‌زمینه */
+        /* افکت محوشدگی سایت در پس‌زمینه */
         .blur-effect {
-            filter: blur(6px) brightness(50%);
+            filter: blur(8px) brightness(40%);
+        }
+
+        /* ریسپانسیو برای گوشی */
+        @media (max-width: 768px) {
+            .books {
+                grid-template-columns: 1fr; /* تو گوشی ۱ ستونه میشه تا بزرگ بمونه */
+                gap: 35px;
+            }
+            #summary-box {
+                flex-direction: column; /* تو گوشی عکس میاد بالا، متن میره پایین */
+                text-align: center;
+                padding: 30px 20px;
+                border-right: none;
+                border-top: 5px solid #e5b85c;
+            }
+            #popup-content {
+                text-align: center;
+            }
+            .popup-buttons {
+                justify-content: center;
+            }
+            #popup-img {
+                width: 180px;
+                transform: none;
+            }
         }
     </style>
 </head>
@@ -246,117 +326,125 @@
          این سایت، سفر یادگیری من از کتاب‌هایی‌ست که خوانده‌ام؛ خلاصه و برداشتی با زبان و نگاه خودم
     </p>
 
+    <!-- دکمه‌های فیلتر -->
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">همه‌ی کتاب‌ها</button>
+        <button class="filter-btn" data-filter="development">توسعه فردی و موفقیت</button>
+        <button class="filter-btn" data-filter="psychology">روان‌شناسی</button>
+        <button class="filter-btn" data-filter="strategy">استراتژی و قدرت</button>
+        <button class="filter-btn" data-filter="literature">ادبیات کلاسیک</button>
+    </div>
+
     <div class="section">
-        <h2>📚 کتابخانه من</h2>
         <div class="books">
             
-            <a href="book1.html" class="book-link">
-                <div class="book-card" data-index="0">
+            <!-- کتاب‌ها با دسته‌بندی هوشمند (data-category) و خلاصه درج شده داخل خود تگ -->
+            <a href="book1.html" class="book-link" data-category="development psychology" data-summary="۱۲ قانون زندگی: زندگی رنج دارد، اما اگر مسئولیت بپذیری و صاف بایستی، می‌توانی معنا پیدا کنی.">
+                <div class="book-card">
                     <img src="1.jpg" alt="۱۲ قانون زندگی">
                     <div class="book-title">۱۲ قانون زندگی</div>
                     <div class="book-author">جردن بی. پیترسون</div>
                 </div>
             </a>
 
-            <a href="book2.html" class="book-link">
-                <div class="book-card" data-index="1">
+            <a href="book2.html" class="book-link" data-category="development psychology" data-summary="فراتر از نظم: رشد واقعی جایی است که جرئت کنی از چارچوب امن خودت خارج شوی.">
+                <div class="book-card">
                     <img src="2.jpg" alt="فراتر از نظم">
                     <div class="book-title">فراتر از نظم</div>
                     <div class="book-author">جردن پیترسون</div>
                 </div>
             </a>
 
-            <a href="book3.html" class="book-link">
-                <div class="book-card" data-index="2">
+            <a href="book3.html" class="book-link" data-category="development" data-summary="تخت خوابت را مرتب کن: پیروزی‌های بزرگ از کارهای کوچک شروع می‌شوند.">
+                <div class="book-card">
                     <img src="3.jpg" alt="تخت خوابت را مرتب کن">
                     <div class="book-title">تخت خوابت را مرتب کن</div>
                     <div class="book-author">ژنرال مک‌ریون</div>
                 </div>
             </a>
 
-            <a href="book4.html" class="book-link">
-                <div class="book-card" data-index="3">
+            <a href="book4.html" class="book-link" data-category="development psychology" data-summary="افسانه کاریزما: کاریزما ترکیبی از حضور ذهن، گرما و قدرت است که آموختنی است.">
+                <div class="book-card">
                     <img src="4.jpg" alt="افسانه کاریزما">
                     <div class="book-title">افسانه کاریزما</div>
                     <div class="book-author">اولیویا فاکس کابان</div>
                 </div>
             </a>
 
-            <a href="book5.html" class="book-link">
-                <div class="book-card" data-index="4">
+            <a href="book5.html" class="book-link" data-category="development strategy" data-summary="بیندیشید و ثروتمند شوید: باور و هدف شفاف می‌توانند مسیر زندگی مالی را عوض کنند.">
+                <div class="book-card">
                     <img src="5.jpg" alt="بیندیشید و ثروتمند شوید">
                     <div class="book-title">بیندیشید و ثروتمند شوید</div>
                     <div class="book-author">ناپلئون هیل</div>
                 </div>
             </a>
 
-            <a href="book6.html" class="book-link">
-                <div class="book-card" data-index="5">
+            <a href="book6.html" class="book-link" data-category="strategy" data-summary="۴۸ قانون قدرت: قوانین نانوشته بازی قدرت در جهان را بدون قضاوت نشان می‌دهد.">
+                <div class="book-card">
                     <img src="6.jpg" alt="۴۸ قانون قدرت">
                     <div class="book-title">۴۸ قانون قدرت</div>
                     <div class="book-author">رابرت گرین</div>
                 </div>
             </a>
 
-            <a href="book7.html" class="book-link">
-                <div class="book-card" data-index="6">
+            <a href="book7.html" class="book-link" data-category="strategy" data-summary="شهریار: سیاست و رهبری بر اساس واقعیت انسان‌هاست، نه آرمان‌های واهی.">
+                <div class="book-card">
                     <img src="7.jpg" alt="شهریار">
                     <div class="book-title">شهریار</div>
                     <div class="book-author">ماکیاولی</div>
                 </div>
             </a>
 
-            <a href="book8.html" class="book-link">
-                <div class="book-card" data-index="7">
+            <a href="book8.html" class="book-link" data-category="psychology" data-summary="انسان در جستجوی هویت خویشتن: رشد یعنی شناخت سایه‌های درون، نه انکار آن‌ها.">
+                <div class="book-card">
                     <img src="8.jpg" alt="انسان در جستجوی هویت خویشتن">
                     <div class="book-title">انسان در جستجوی هویت خویشتن</div>
                     <div class="book-author">کارل یونگ</div>
                 </div>
             </a>
 
-            <a href="book9.html" class="book-link">
-                <div class="book-card" data-index="8">
+            <a href="book9.html" class="book-link" data-category="psychology strategy" data-summary="روانشناسی تاریک: آگاهی، اولین خط دفاع در برابر دستکاری روانی دیگران است.">
+                <div class="book-card">
                     <img src="9.jpg" alt="روانشناسی تاریک">
                     <div class="book-title">روانشناسی تاریک</div>
                     <div class="book-author">ویلیام کوپر</div>
                 </div>
             </a>
 
-            <a href="book10.html" class="book-link">
-                <div class="book-card" data-index="9">
+            <a href="book10.html" class="book-link" data-category="psychology" data-summary="تفسیر خواب: خواب‌ها زبان ناخودآگاه و نمایانگر مسائل سرکوب شده هستند.">
+                <div class="book-card">
                     <img src="10.jpg" alt="تفسیر خواب">
                     <div class="book-title">تفسیر خواب</div>
                     <div class="book-author">زیگموند فروید</div>
                 </div>
             </a>
 
-            <a href="book11.html" class="book-link">
-                <div class="book-card" data-index="10">
+            <a href="book11.html" class="book-link" data-category="strategy" data-summary="هنر جنگ: شناخت خود و دشمن، مهم‌تر از قدرت فیزیکی در هر نبردی است.">
+                <div class="book-card">
                     <img src="11.jpg" alt="هنر جنگ">
                     <div class="book-title">هنر جنگ</div>
                     <div class="book-author">سون تزو</div>
                 </div>
             </a>
 
-            <a href="book12.html" class="book-link">
-                <div class="book-card" data-index="11">
+            <a href="book12.html" class="book-link" data-category="literature" data-summary="شاه لیر: تراژدی غرور و قدرت بدون خرد که حتی پادشاهان را به سقوط می‌کشاند.">
+                <div class="book-card">
                     <img src="12.jpg" alt="شاه لیر">
                     <div class="book-title">شاه لیر</div>
                     <div class="book-author">شکسپیر</div>
                 </div>
             </a>
 
-            <a href="book13.html" class="book-link">
-                <div class="book-card" data-index="12">
+            <a href="book13.html" class="book-link" data-category="strategy development" data-summary="هنر بله گرفتن: مذاکره یعنی همکاری هوشمندانه و تمرکز روی منافع دو طرف.">
+                <div class="book-card">
                     <img src="13.jpg" alt="هنر بله گرفتن">
                     <div class="book-title">هنر بله گرفتن</div>
                     <div class="book-author">فیشر و یوری</div>
                 </div>
             </a>
 
-            <!-- کتاب جدید اضافه شده -->
-            <a href="book14.html" class="book-link">
-                <div class="book-card" data-index="13">
+            <a href="book14.html" class="book-link" data-category="psychology development" data-summary="سایکو-سایبرنتیک: تصویر ذهنی، اولین گام پیروزی شما در زندگیست.">
+                <div class="book-card">
                     <img src="14.jpg" alt="سایکو-سایبرنتیک">
                     <div class="book-title">سایکو-سایبرنتیک</div>
                     <div class="book-author">ماکسول مالز</div>
@@ -367,67 +455,88 @@
     </div>
 </div>
 
+<!-- پاپ‌آپ جدید با تصویر بزرگ -->
 <div id="summary-overlay">
     <div id="summary-box">
-        <div id="summary-text"></div>
-        <div class="popup-buttons">
-            <a href="#" id="go-to-book-btn" class="btn-action btn-go">برو به کتاب 📚</a>
-            <button id="close-popup-btn" class="btn-action btn-close">بازگشت</button>
+        <img id="popup-img" src="" alt="جلد کتاب">
+        <div id="popup-content">
+            <div id="summary-text"></div>
+            <div class="popup-buttons">
+                <a href="#" id="go-to-book-btn" class="btn-action btn-go">برو به کتاب 📚</a>
+                <button id="close-popup-btn" class="btn-action btn-close">بازگشت</button>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    const summaries = [
-        "۱۲ قانون زندگی: زندگی رنج دارد، اما اگر مسئولیت بپذیری و صاف بایستی، می‌توانی معنا پیدا کنی.",
-        "فراتر از نظم: رشد واقعی جایی است که جرئت کنی از چارچوب امن خودت خارج شوی.",
-        "تخت خوابت را مرتب کن: پیروزی‌های بزرگ از کارهای کوچک شروع می‌شوند.",
-        "افسانه کاریزما: کاریزما ترکیبی از حضور ذهن، گرما و قدرت است که آموختنی است.",
-        "بیندیشید و ثروتمند شوید: باور و هدف شفاف می‌توانند مسیر زندگی مالی را عوض کنند.",
-        "۴۸ قانون قدرت: قوانین نانوشته بازی قدرت در جهان را بدون قضاوت نشان می‌دهد.",
-        "شهریار: سیاست و رهبری بر اساس واقعیت انسان‌هاست، نه آرمان‌های واهی.",
-        "انسان در جستجوی هویت خویشتن: رشد یعنی شناخت سایه‌های درون، نه انکار آن‌ها.",
-        "روانشناسی تاریک: آگاهی، اولین خط دفاع در برابر دستکاری روانی دیگران است.",
-        "تفسیر خواب: خواب‌ها زبان ناخودآگاه و نمایانگر مسائل سرکوب شده هستند.",
-        "هنر جنگ: شناخت خود و دشمن، مهم‌تر از قدرت فیزیکی در هر نبردی است.",
-        "شاه لیر: تراژدی غرور و قدرت بدون خرد که حتی پادشاهان را به سقوط می‌کشاند.",
-        "هنر بله گرفتن: مذاکره یعنی همکاری هوشمندانه و تمرکز روی منافع دو طرف.",
-        "سایکو-سایبرنتیک: تصویر ذهنی، اولین گام پیروزی شما در زندگیست." // خلاصه کتاب جدید
-    ];
+    // --- بخش فیلتر و دسته‌بندی کتاب‌ها ---
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const bookLinks = document.querySelectorAll('.book-link');
 
-    const links = document.querySelectorAll('.book-link');
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // تغییر ظاهر دکمه فعال
+            document.querySelector('.filter-btn.active').classList.remove('active');
+            btn.classList.add('active');
+
+            const filterValue = btn.getAttribute('data-filter');
+
+            // نمایش با افکت
+            bookLinks.forEach(link => {
+                const categories = link.getAttribute('data-category');
+                
+                if (filterValue === 'all' || categories.includes(filterValue)) {
+                    link.style.display = 'block';
+                    setTimeout(() => {
+                        link.style.opacity = '1';
+                        link.style.transform = 'scale(1)';
+                    }, 50);
+                } else {
+                    link.style.opacity = '0';
+                    link.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        link.style.display = 'none';
+                    }, 400); // همزمان با تایم ترانزیشن CSS
+                }
+            });
+        });
+    });
+
+    // --- بخش پاپ‌آپ و نمایش زنده ---
     const overlay = document.getElementById('summary-overlay');
     const summaryText = document.getElementById('summary-text');
+    const popupImg = document.getElementById('popup-img');
     const goToBookBtn = document.getElementById('go-to-book-btn');
     const closePopupBtn = document.getElementById('close-popup-btn');
     const wrapper = document.getElementById('main-wrapper');
 
-    links.forEach(link => {
+    bookLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-            // جلوگیری از رفتن مستقیم به صفحه بعد هنگام کلیک روی کارت
             e.preventDefault(); 
             
-            const card = link.querySelector('.book-card');
-            const index = card.getAttribute('data-index');
+            // دریافت اطلاعات مستقیم از خود تگ (کد نویسی خیلی تمیزتر شد)
             const targetUrl = link.getAttribute('href');
+            const summary = link.getAttribute('data-summary');
+            const imgSrc = link.querySelector('img').getAttribute('src');
 
-            // تزریق متن و تنظیم لینک دکمه اصلی
-            summaryText.innerText = summaries[index];
+            // تزریق اطلاعات به پاپ‌آپ
+            summaryText.innerText = summary;
             goToBookBtn.setAttribute('href', targetUrl);
+            popupImg.setAttribute('src', imgSrc);
 
-            // نمایش پاپ‌آپ و اعمال افکت بلور روی پس‌زمینه
+            // نمایش با افکت بلور
             overlay.classList.add('active');
             wrapper.classList.add('blur-effect');
         });
     });
 
-    // بستن پاپ‌آپ با دکمه بازگشت
+    // بستن پاپ‌آپ
     closePopupBtn.addEventListener('click', () => {
         overlay.classList.remove('active');
         wrapper.classList.remove('blur-effect');
     });
 
-    // بستن پاپ‌آپ در صورت کلیک روی فضای خالی بیرون از جعبه
     overlay.addEventListener('click', (e) => {
         if (e.target === overlay) {
             overlay.classList.remove('active');
